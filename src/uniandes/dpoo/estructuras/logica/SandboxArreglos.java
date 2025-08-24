@@ -474,17 +474,20 @@ public class SandboxArreglos
     public boolean compararArregloEnteros( int[] otroArreglo )
     {
         boolean iguales = true;
-        int i = 0;
         
         if (this.arregloEnteros.length != otroArreglo.length) {
         	iguales = false;
         }
         
         else {
+        	int i = 0;
+        	
             while (i < this.arregloEnteros.length && iguales == true) {
             	if (this.arregloEnteros[i] != otroArreglo[i]) {
             		iguales = false;
             	}
+            	
+            	i++;
             }
         }
         
