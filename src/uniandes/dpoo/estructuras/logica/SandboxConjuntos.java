@@ -1,6 +1,9 @@
 package uniandes.dpoo.estructuras.logica;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -39,7 +42,9 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoLista( )
     {
-        return null;
+        List<String> cadenas = new ArrayList<String>(this.arbolCadenas);
+        
+        return cadenas;
     }
 
     /**
@@ -48,7 +53,10 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoListaInvertida( )
     {
-        return null;
+        List<String> cadenas = getCadenasComoLista();
+        cadenas.sort(Collections.reverseOrder());;
+        
+        return cadenas;
     }
 
     /**
@@ -59,7 +67,11 @@ public class SandboxConjuntos
      */
     public String getPrimera( )
     {
-        return null;
+        if (this.arbolCadenas.size() == 0) {
+        	return null;
+        }
+    	
+    	return this.arbolCadenas.first();
     }
 
     /**
@@ -70,7 +82,11 @@ public class SandboxConjuntos
      */
     public String getUltima( )
     {
-        return null;
+        if (this.arbolCadenas.size() == 0) {
+        	return null;
+        }
+    	
+    	return this.arbolCadenas.last();
     }
 
     /**
@@ -80,7 +96,9 @@ public class SandboxConjuntos
      */
     public Collection<String> getSiguientes( String cadena )
     {
-        return null;
+        Collection<String> cadenasMayores = this.arbolCadenas.tailSet(cadena);
+    	
+    	return cadenasMayores;
     }
 
     /**
@@ -89,7 +107,7 @@ public class SandboxConjuntos
      */
     public int getCantidadCadenas( )
     {
-        return -1;
+        return this.arbolCadenas.size();
     }
 
     /**
@@ -101,7 +119,7 @@ public class SandboxConjuntos
      */
     public void agregarCadena( String cadena )
     {
-
+    	this.arbolCadenas.add(cadena);
     }
 
     /**
@@ -110,7 +128,7 @@ public class SandboxConjuntos
      */
     public void eliminarCadena( String cadena )
     {
-
+    	this.arbolCadenas.remove(cadena);
     }
 
     /**
@@ -119,7 +137,10 @@ public class SandboxConjuntos
      */
     public void eliminarCadenaSinMayusculasOMinusculas( String cadena )
     {
-
+    	NavigableSet<String> newSet = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+    	newSet.addAll(this.arbolCadenas);
+    	newSet.remove(cadena);
+    	this.arbolCadenas = newSet;
     }
 
     /**
@@ -127,7 +148,8 @@ public class SandboxConjuntos
      */
     public void eliminarPrimera( )
     {
-
+    	String first = this.arbolCadenas.first();
+    	this.arbolCadenas.remove(first);
     }
 
     /**
@@ -138,7 +160,14 @@ public class SandboxConjuntos
      */
     public void reiniciarConjuntoCadenas( List<Object> objetos )
     {
-
+    	NavigableSet<String> newSet = new TreeSet<String>();
+    	
+    	for (Iterator<Object> iterator = objetos.iterator(); iterator.hasNext();) {
+    		String nextToString = iterator.next().toString();
+    		newSet.add(nextToString);
+    	}
+    	
+    	this.arbolCadenas = newSet;
     }
 
     /**
@@ -148,6 +177,14 @@ public class SandboxConjuntos
      */
     public void volverMayusculas( )
     {
+    	NavigableSet<String> newSet = new TreeSet<String>();
+    	
+    	for (Iterator<String> iterator = this.arbolCadenas.iterator(); iterator.hasNext();) {
+    		String cadenaUpper = iterator.next().toUpperCase();
+    		newSet.add(cadenaUpper);
+    	}
+    	
+    	this.arbolCadenas = newSet;
     }
 
     /**
@@ -155,7 +192,9 @@ public class SandboxConjuntos
      */
     public TreeSet<String> invertirCadenas( )
     {
-        return null;
+        TreeSet<String> reverseSet = (TreeSet<String>) this.arbolCadenas.descendingSet();
+        
+        return reverseSet;
     }
 
     /**
@@ -165,7 +204,18 @@ public class SandboxConjuntos
      */
     public boolean compararElementos( String[] otroArreglo )
     {
-        return false;
+    	boolean hacenParte = true;
+    	
+        for (String str:otroArreglo) {
+        	boolean existe = this.arbolCadenas.contains(str);
+        	
+        	if (existe == false) {
+        		hacenParte = false;
+        		break;
+        	}
+        }
+        
+        return hacenParte;
     }
 
 }
