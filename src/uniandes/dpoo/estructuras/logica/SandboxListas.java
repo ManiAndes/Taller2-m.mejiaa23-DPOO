@@ -343,18 +343,15 @@ public class SandboxListas
      */
     public void generarEnteros( int cantidad, int minimo, int maximo )
     {
-    	List<Integer> randomList = new ArrayList<Integer>();
+    	this.listaEnteros.clear();
     	int i = 0;
     	
     	while (i < cantidad) {
-    		double rand = Math.random();
-    		int num = (int) ((rand * (maximo - minimo + 1)) + minimo);
-    		randomList.add(num);
+    		int num = (int) ((Math.random() * (maximo - minimo + 1)) + minimo);
+    		this.listaEnteros.add(num);
     		
     		i++;
     	}
-    	
-    	this.listaEnteros = randomList;
     }
 
 }
